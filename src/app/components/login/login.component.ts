@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   }
   onSubmit(){
     console.log("form submitted sucessfully");
-    if((this.credentials.email!=='' && this.credentials.password!=='') && (this.credentials.email!=null && this.credentials.password)){
+    if((this.credentials.email!=='' && this.credentials.password!=='') && (this.credentials.email!==null && this.credentials.password!==null)){
       console.log('we have to pass form data to server');
       this.loginService.generateToken(this.credentials).subscribe(
         (response:any)=>{
