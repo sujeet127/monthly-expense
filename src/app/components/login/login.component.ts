@@ -1,7 +1,6 @@
  import { Component, Input, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
-import { NgForm } from '@angular/forms';
-import { User } from 'src/app/classes/user';
+
 
 @Component({
   selector: 'app-login',
@@ -27,7 +26,7 @@ export class LoginComponent implements OnInit {
   }
   onSubmit(){
     console.log("form submitted sucessfully");
-    if((this.credentials.email!='' && this.credentials.password!='') && (this.credentials.email!=null && this.credentials.password)){
+    if((this.credentials.email!=='' && this.credentials.password!=='') && (this.credentials.email!=null && this.credentials.password)){
       console.log('we have to pass form data to server');
       this.loginService.generateToken(this.credentials).subscribe(
         (response:any)=>{
