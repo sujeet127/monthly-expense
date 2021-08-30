@@ -4,62 +4,60 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RegistrationComponent } from './components/registration/registration.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ResetComponent } from './components/reset/reset.component';
 import { AboutusComponent } from './components/aboutus/aboutus.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
+import { MatListModule } from '@angular/material/list';
 import { BeinspiredComponent } from './components/beinspired/beinspired.component';
 import { ExpenseService } from './services/expense.service';
 import { IncomeService } from './services/income.service';
 import { LoginService } from './services/login.service';
 import { ExpenselistComponent } from './components/expenselist/expenselist.component';
 import { EditexpenseComponent } from './components/editexpense/editexpense.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { IncomeComponent } from './components/income/income.component';
 import { EditincomeComponent } from './components/editincome/editincome.component';
 
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { ReportsComponent } from './components/reports/reports.component';
-import { EmicalculatorComponent } from './components/emicalculator/emicalculator.component';
-import { BasicCalculatorComponent } from './components/basic-calculator/basic-calculator.component';
-import { DashhomeComponent } from './components/dashhome/dashhome.component';
+// import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-
-
-import {MatListModule} from '@angular/material/list';
-import {MatSelectModule} from '@angular/material/select';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import { AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
+import { PieSeriesService } from '@syncfusion/ej2-angular-charts';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
+import { ExpenseComponent } from './expense/expense/expense.component';
+import { ExpenseserviceService } from './services/expenseservice.service';
+import { DashhomeComponent } from './components/dashhome/dashhome.component';
+// import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
+import { LoadingspinnerComponent } from './components/loadingspinner/loadingspinner.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+import { ChartsModule } from 'ng2-charts';
+import { EMIComponent } from './components/emi/emi.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
+import { ReportsComponent } from './components/reports/reports.component';
 import { HelpComponent } from './components/help/help.component';
-
-
-
-
- 
-
 
 @NgModule({
   declarations: [
@@ -71,44 +69,55 @@ import { HelpComponent } from './components/help/help.component';
     RegistrationComponent,
     ResetComponent,
     AboutusComponent,
-    
+
     BeinspiredComponent,
-         ExpenselistComponent,
-         EditexpenseComponent,
-         UserprofileComponent,
-         IncomeComponent,
-         EditincomeComponent,
-         ReportsComponent,
-         EmicalculatorComponent,
-         BasicCalculatorComponent,
-         DashhomeComponent,
-         HelpComponent,
-         
-         
+    ExpenselistComponent,
+    EditexpenseComponent,
+    UserprofileComponent,
+    ExpenseComponent,
+    AboutusComponent,
+    DashhomeComponent,
+    LoadingspinnerComponent,
+    IncomeComponent,
+    EditincomeComponent,
+    EMIComponent,
+    CalculatorComponent,
+    ReportsComponent,
+    HelpComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,MatButtonModule,MatToolbarModule,
-    MatIconModule,MatFormFieldModule,MatMenuModule,MatTableModule,MatInputModule,FormsModule,
-    HttpClientModule, ReactiveFormsModule,NgbModule,
-    BsDatepickerModule,NgxChartsModule,
-    BsDatepickerModule.forRoot(),
-
-   MatListModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatMenuModule,
+    MatTableModule,
+    MatInputModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    NgbModule, MatListModule,
     MatSelectModule,
     MatChipsModule,
     MatDatepickerModule,
     MatSidenavModule,
     MatDividerModule,
-   // ChartsModule,
+    ChartsModule,
     // WavesModule,
-   
+    AccumulationChartModule,
+    // BsDatepickerModule,
+    // NgxChartsModule,
+    // BsDatepickerModule.forRoot(),
     Ng2SearchPipeModule,
     Ng2OrderModule,
+    NgxPaginationModule
 
   ],
-  providers: [ExpenseService,IncomeService,LoginService],
+  providers: [ExpenseService, ExpenseserviceService, IncomeService, LoginService, PieSeriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

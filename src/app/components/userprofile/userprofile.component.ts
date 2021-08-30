@@ -12,6 +12,7 @@ export class UserprofileComponent implements OnInit {
   msg="";
   userData=new User();
   user=new User();
+  display = "none";
 
   // userData:any=[];
   
@@ -28,23 +29,18 @@ export class UserprofileComponent implements OnInit {
 
   ngOnInit(): void {
       
-       this.restApi.getUserByEmailId(this.data).subscribe((data: any)=>{this.userData=data;
-        console.log(this.userData);
-      });
-       
-       
+       this.restApi.getUserByEmailId(this.data).subscribe((data: any)=>this.userData=data);
   }
   
 
   userProfile(){
+    if (window.confirm('Are you sure , you want to update?')){
     this.restApi.editUser(this.userData).subscribe(
       res=>{
         console.log("Response received");
         this.msg="Update Sucessful!!";
-        //console.log(this.userData);
         this.router.navigate(['/dashboard']);
-        
-        
+        console.log(this.userData);
         
       },
       error=>{
@@ -56,15 +52,33 @@ export class UserprofileComponent implements OnInit {
         
       }
     )
-}
+}}
+updateUser() {
+  if (window.confirm('Are you sure , you want to update?')) {
+    this.restApi.editUser(this.user).subscribe((data: {}) => {
+      this.ngOnInit();
+    });
 
-deleteProfile(userId: any) {
-  return this.restApi.deleteProfile(userId).subscribe((data) => {
-    window.alert("Your Account is deleted Successfully")
-    localStorage.removeItem('token');
-    window.location.reload();
-  });
+  }
 }
+openModal() {
+  this.display = "block";
+}
+onCloseHandled() {
+  this.display = "none";
+  this.ngOnInit();
+}
+deleteProfile(userId: any) {
+  if (window.confirm('Your whole data will be deleted.Are you sure , you want to delete? ')) 
+  {
+    this.restApi.deleteProfile(userId).subscribe((data) => {
+      
+      localStorage.removeItem('token');
+      window.location.reload();
+    });
+  }
+  }
+  
 }
 
 

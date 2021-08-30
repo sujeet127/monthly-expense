@@ -22,7 +22,7 @@ export class IncomeService {
     return this.http.get<Income[]>(this.url+'/allIncomes').pipe(retry(1), catchError(this.handleError));
     
   }
-  getSelectedIncomeFromService(id):Observable<Income[]>{
+  getSelectedIncomeFromService(id:any):Observable<Income[]>{
     return this.http.get<Income[]>(this.url+'/selectedincomes/'+id).pipe(retry(1), catchError(this.handleError));
     
   }

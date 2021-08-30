@@ -7,16 +7,16 @@
             close
         </mat-icon>
     </button>
-         Welcome {{fname}}  to Expense Management System 
+   Hi! {{fname|titlecase}} Welcome to  MYB
 </mat-toolbar>
 
 <mat-sidenav-container>
     <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
 
         <img class="avatar mat-elevation-z8"
-            src="https://images.unsplash.com/photo-1598214886806-c87b84b7078b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=925&q=80" />
+            src="../assets/images/sujeet.jpg" />
 
-        <h4 class="name">{{fname}}  {{lname}}</h4>
+        <h4 class="name">{{fname| titlecase}} {{lname | titlecase}}</h4>
         <p class="designation"></p>
 
         <mat-divider></mat-divider>
@@ -25,41 +25,36 @@
             <mat-icon>dashboard</mat-icon>
             <span>Dashboard</span>
         </button>
-        <button mat-button class="menu-button" [routerLink]="['/userprofile']"  >
+        <button mat-button class="menu-button" [routerLink]="['/userprofile']">
             <mat-icon>person</mat-icon>
             <span>Profile</span>
         </button>
         <button mat-button class="menu-button">
             <div style="padding-right: 10px;" [matMenuTriggerFor]="menu">
-            <mat-icon>info</mat-icon>
-            <span>Transaction</span>
+                <mat-icon>info</mat-icon>
+                <span>Transaction</span>
             </div>
-                <mat-menu #menu="matMenu" xPosition="after" class="my-class">
-                    <button mat-menu-item (click)="showIncomeTable()">Income</button>
-                    <button mat-menu-item (click)="showExpenseTable()">Expense</button>
-                </mat-menu>
-            
+            <mat-menu #menu="matMenu" xPosition="after" class="my-class">
+                <button mat-menu-item (click)="showIncomeTable()">Income</button>
+                <button mat-menu-item (click)="showExpenseTable()">Expense</button>
+            </mat-menu>
         </button>
-
 
         <mat-divider></mat-divider>
 
-        <button mat-button class="menu-button" [routerLink]="['/home']" routerLinkActive="router-link-active"  >
+        <button mat-button class="menu-button" [routerLink]="['/help']" routerLinkActive="router-link-active" >
             <mat-icon>help</mat-icon>
             <span>Help</span>
         </button>
 
     </mat-sidenav>
     <mat-sidenav-content>
-        <div class="container">
-            
-            <!-- <div id="maincontent">
-                
-            </div> -->
-            <app-dashhome *ngIf="showDhome" ></app-dashhome>
-            <app-expenselist *ngIf="showExpense"></app-expenselist> 
-            <app-income *ngIf="showIncome"></app-income>
+        <div class="content mat-elevation-z8">
+
+            <app-dashhome [showDashHome]="showDhome"></app-dashhome>
+            <app-expense [showMePartially]="showVar"></app-expense>
+            <app-income [showMePartially1]="showVar1"></app-income>
+
         </div>
-        
     </mat-sidenav-content>
 </mat-sidenav-container>

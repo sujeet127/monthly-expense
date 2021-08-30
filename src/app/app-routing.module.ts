@@ -15,9 +15,10 @@ import { UserprofileComponent } from './components/userprofile/userprofile.compo
 import { IncomeComponent } from './components/income/income.component';
 import { EditincomeComponent } from './components/editincome/editincome.component';
 import { ReportsComponent } from './components/reports/reports.component';
-import { EmicalculatorComponent } from './components/emicalculator/emicalculator.component';
-import { BasicCalculatorComponent } from './components/basic-calculator/basic-calculator.component';
+
 import { HelpComponent } from './components/help/help.component';
+import { EMIComponent } from './components/emi/emi.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
 
 
 
@@ -30,6 +31,7 @@ const routes: Routes = [
   canActivate:[AuthGuard]
 
 },
+
   {path:"navbar",component:NavbarComponent,pathMatch:"full" },
   {path:"registration",component:RegistrationComponent,pathMatch:"full" },
   {path:"resetPassword",component:ResetComponent,pathMatch:"full" },
@@ -38,13 +40,14 @@ const routes: Routes = [
   {path:"expenselist",component:ExpenselistComponent,pathMatch:"full" },
   { path: 'editexpense/:expenseId', component: EditexpenseComponent,pathMatch:"full"  },
   { path: 'userprofile', component: UserprofileComponent,pathMatch:"full"  },
-  { path: 'income', component: IncomeComponent,pathMatch:"full"  },
+  { path: 'incomelist', component: IncomeComponent,pathMatch:"full"  },
   { path: 'editIncome/:incomeId', component:EditincomeComponent,pathMatch:"full"  },
   { path: 'reports', component:ReportsComponent,pathMatch:"full"  },
-  { path: 'emi', component:EmicalculatorComponent,pathMatch:"full"  },
-  { path: 'calculator',component: BasicCalculatorComponent,pathMatch:"full"  },
+  { path: 'emi', component:EMIComponent,pathMatch:"full"  },
+  { path: 'calculator',component: CalculatorComponent,pathMatch:"full"  },
  
   { path: 'help',component: HelpComponent,pathMatch:"full"  },
+  
   
 
   

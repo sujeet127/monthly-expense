@@ -2,11 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Expense } from 'src/app/classes/expense';
-import { Income } from 'src/app/classes/income';
-
+import { ExpenseserviceService } from 'src/app/services/expenseservice.service';
 import { IncomeService } from 'src/app/services/income.service';
-import { LoginService } from 'src/app/services/login.service';
-import { ExpenseService } from '../../services/expense.service';
 
 
 
@@ -16,81 +13,45 @@ import { ExpenseService } from '../../services/expense.service';
   styleUrls: ['./dashhome.component.css']
 })
 export class DashhomeComponent implements OnInit {
-  userId = localStorage.getItem("userId");
-  email: any = localStorage.getItem('credentialEmail');
-  data = {
-    "email": this.email
-  }
-  campareIncome:boolean;
-  userName:any;
-  userData: any = [];
-  expenseData = new Expense();
-  incomeData= new Income();
   @Input() totalamount = 0;
   @Input() totalamountinc = 0;
   @Input() expense: any = [];
   @Input() income: any = [];
   @Input() showDashHome: boolean | undefined;
-  @Input() showIncome: boolean | undefined;
-  @Input() showPassword: boolean | undefined;
   transaction = 0;
-
-
-
+  public flag: boolean = true;
 
   constructor(public router: Router,
     public aroute: ActivatedRoute,
-    public restApi: ExpenseService,
-    public incomeService: IncomeService, public loginService: LoginService,
-    private httpService: HttpClient) { }
-
+    public restApi: ExpenseserviceService,
+    public restApi1: IncomeService,
+   ) { }
+  userId = localStorage.getItem("userId");
 
   ngOnInit(): void {
-    this.loginService.getUserByEmailId(this.data).subscribe((data: any) => {
-      this.userData = data;
-      //console.log(this.userData.userId);
-      this.expenseData.user = this.userData;
-      this.incomeData.user=this.userData;
-      this.userName=this.userData.fname;
-    
-    });
+    this.userId = localStorage.getItem("userId");
+    this.loadExpense();
+    this.getTotalExp();
+    this.loadIncome();
+    this.getTotalInc();
+   
+    this.swap();
+  }
 
-      this.loadExpense();
-      this.getTotalExp();
-      this.loadIncome();
-      this.getTotalInc();
-
-
-      if(this.getTotalInc()<this.getTotalExp())
-      {
-        this.campareIncome=false;
-
-      }
-      else{
-        this.campareIncome=true;
-      }
-      
-      
-      
-
-
-    }
-
-  
   showexpsummary() {
-      this.loadExpense();
-      this.getTotalExp();
-    }
+    this.loadExpense();
+    this.getTotalExp();
+  }
+
   loadExpense() {
-      return this.restApi.getSelectedExpenseFromService(this.userId).subscribe((data) => {
-        (this.expense = data)
+    return this.restApi
+      .getSelectedExpenseFromService(this.userId)
+      .subscribe((data) => (this.expense = data));
+  }
 
-
-      });
-    }
   getTotalExp() {
-      let total = 0;
-      for(var i = 0; i< this.expense.length; i++) {
+    let total = 0;
+    for (var i = 0; i < this.expense.length; i++) {
       console.log(this.expense.length);
       if (this.expense[i].expenseAmount) {
         total += this.expense[i].expenseAmount;
@@ -101,8 +62,11 @@ export class DashhomeComponent implements OnInit {
   }
 
   loadIncome() {
-    return this.incomeService.getSelectedIncomeFromService(this.userId).subscribe((data) => (this.income = data));
+    return this.restApi1
+      .getSelectedIncomeFromService(this.userId)
+      .subscribe((data) => (this.income = data));
   }
+
   getTotalInc() {
     let totalinc = 0;
     for (var j = 0; j < this.income.length; j++) {
@@ -115,21 +79,21 @@ export class DashhomeComponent implements OnInit {
     return this.totalamountinc;
   }
 
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    
+  swap() {
+    if ((this.getTotalInc() - this.getTotalExp()) < 0) {
+      this.flag = false;
+    }
   }
+  // showAlert() {
 
-
-
-
-
-  
-
-
-
-
-
+  //   if(this.getTotalExp() > this.getTotalInc()){
+  //     console.log('This will always executed.');
+  //     console.log(`${this.getTotalExp()} hello`);
+  //     window.confirm('Negative Balance!');
+  //   }else{
+  //     console.log((this.getTotalInc() - this.getTotalExp()) + 'hellloo');
+  //     window.alert('testwindow');
+  //   }
+  // }
 
 }

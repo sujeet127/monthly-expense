@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Income } from 'src/app/classes/income';
+import { LoginService } from 'src/app/services/login.service';
 import { IncomeService } from '../../services/income.service';
-import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-income',
@@ -10,56 +11,116 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./income.component.css']
 })
 export class IncomeComponent implements OnInit {
-  incomeData= new Income();
-  incomes:any=[];
-  userData:any=[];
-  btnValue="Add Income";
-  searchText:any;
-  userId=localStorage.getItem("userId");
-  constructor( 
-    public router: Router,
+  incomeData = new Income();
+  income: any = [];
+  userData: any = [];
+  display = "none";
+  displayAdd = "none";
+  totalamountinc = 0;
+  searchText: any;
+  // incomeData: any = {};
+  userId = localStorage.getItem("userId");
+
+  incomeToUpdate = {
+    incomeId: "",
+    incomeAmount: "",
+    incomeDescription: "",
+  };
+
+  @Input() showMePartially1: boolean | undefined;
+  constructor(public router: Router,
     public aroute: ActivatedRoute,
     public restApi: IncomeService,
-    public loginService:LoginService
-  ) { }
-  email:any=localStorage.getItem('credentialEmail');
-  data= {
-   "email": this.email
-         }
+    public loginService: LoginService) { }
+
+  email: any = localStorage.getItem('credentialEmail');
+  data = {
+    "email": this.email
+  }
 
   ngOnInit(): void {
-
-    this.loginService.getUserByEmailId(this.data).subscribe((data: any)=>{this.userData=data;
-      console.log(this.userData);
-      this.incomeData.user=this.userData;
-      console.log(this.incomeData.user);
-
-    });
-
-    
     this.loadIncome();
-    $( "#slide1" ).click(function() {
-      let btnValue="Add Income";
-      $( "#box1" ).slideToggle(1000);
-    });
-  }
-  
-  loadIncome() {
-    return this.restApi.getSelectedIncomeFromService(this.userId).subscribe((data) => (this.incomes = data));
-  }
-  deleteIncome(id :any) {
-    return this.restApi.deleteIncome(id).subscribe((data) => {
-      this.loadIncome();
+    this.loginService.getUserByEmailId(this.data).subscribe((data: any) => {
+      this.userData = data;
+      console.log(this.userData);
+      this.incomeData.user = this.userData;
+      console.log(this.incomeData.user);
+      // this.getTotalInc();
     });
   }
 
- 
-  addIncome(){
-    this.restApi.createIncome(this.incomeData).subscribe(data=>{
+  loadIncome() {
+    return this.restApi
+      .getSelectedIncomeFromService(this.userId)
+      .subscribe((data) => (this.income = data));
+  }
+
+  register(registerForm: NgForm) {
+    this.restApi.createIncome(registerForm.value).subscribe(
+      (resp) => {
+        console.log(resp);
+        registerForm.reset();
+        this.loadIncome();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  deleteInc(incid: any) {
+    if (window.confirm('Are you sure , you want to delete?')) {
+      this.restApi.deleteIncome(incid).subscribe((data) => {
+        this.loadIncome();
+      }
+      );
+    }
+  }
+
+  edit(inc: any) {
+    this.incomeToUpdate = inc;
+  }
+
+  updateInc() {
+    if (window.confirm('Are you sure , you want to update?')) {
+      this.restApi.editIncome(this.incomeData).subscribe((data:{})=>{
+        this.loadIncome();
+      });
+    }
+  }
+
+  addIncome() {
+    this.restApi.createIncome(this.incomeData).subscribe(data => {
       this.loadIncome();
-    
     })
   }
 
+  openModal() {
+    this.display = "block";
+  }
 
+  onCloseHandled() {
+    this.display = "none";
+  }
+
+  openModalAdd() {
+    this.displayAdd = "block";
+  }
+
+  onCloseHandledAdd() {
+    this.displayAdd = "none";
+    this.ngOnInit();
+  }
+
+  //   getTotalInc() {
+  //     let totalinc = 0;
+  //     for (var i = 0; i < this.income.length; i++) {
+  //         console.log(this.income.length);
+  //         if (this.income[i].incomeAmount) {
+  //             totalinc += this.income[i].incomeAmount;
+  //             this.totalamountinc = totalinc;
+  //         }
+  //     }
+  //     return this.totalamountinc;
+  // }
 }

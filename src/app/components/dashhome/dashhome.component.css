@@ -120,19 +120,8 @@
 .mbb1:after{ 
     content:"Balance";
 }
-#balance-card{
-width: 100%!important;
-}
-#balance-card1{
-    width: 22%!important;
-}
-.container{
-    position: absolute;
-    top: 40%;
-    width: 90%;
-    left:8%;
-    transform: scale(1.1);
-}
+
+
 
 
 

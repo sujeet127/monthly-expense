@@ -16,17 +16,15 @@ export class LoginComponent implements OnInit {
   @Input()
   email: any;
   
-  
   message="";
   msg="";
   constructor(private loginService:LoginService) { }
 
   ngOnInit(): void {
-    
   }
   onSubmit(){
     console.log("form submitted sucessfully");
-    if((this.credentials.email!=='' && this.credentials.password!=='') && (this.credentials.email!==null && this.credentials.password!==null)){
+    if((this.credentials.email!='' && this.credentials.password!='') && (this.credentials.email!=null && this.credentials.password)){
       console.log('we have to pass form data to server');
       this.loginService.generateToken(this.credentials).subscribe(
         (response:any)=>{
@@ -37,10 +35,8 @@ export class LoginComponent implements OnInit {
 
           this.email=this.credentials.email;
           localStorage.setItem('credentialEmail',this.email);
-          
-          
+          // window.location.href="/dashboard";
           window.location.href="/dashboard";
-
         },
         error=>{console.error();
           console.log("Exception Occured");
